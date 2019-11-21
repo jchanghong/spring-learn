@@ -26,6 +26,7 @@ import javax.servlet.ServletConfig;
  * \
  */
 @Component
+//@EnableLoadTimeWeaving
 @Configuration
 @Primary
 @Service
@@ -42,7 +43,7 @@ public class BeanWeb implements Lifecycle, ApplicationContextAware , ServletConf
         System.out.println("init"+port);
     }
 
-    @Value("${user.home}")
+    @Value("dsdsd${user.home}dsds")
     String port;
 
     @PreDestroy

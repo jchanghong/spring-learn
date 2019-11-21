@@ -1,8 +1,11 @@
 package com.example.springlearn.core.ioc;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.Lifecycle;
 import org.springframework.context.annotation.*;
+import org.springframework.context.event.EventListener;
+import org.springframework.format.annotation.NumberFormat;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,6 +31,7 @@ public class Bean2   {
     @Autowired
    public StringBuilder stringBuilder;
     @Bean(name = "stringBuilder")
+    @Profile("default")
     @Description("test")
     @Scope("prototype")
     public static StringBuilder bean3() {
@@ -39,11 +43,23 @@ public class Bean2   {
     @Resource
     BeanWeb beanWeb;
 
+    @Autowired
+    ApplicationContext applicationContext;
     @GetMapping("/test")
     public String web() {
         String s = beanWeb.toString();
+        applicationContext.publishEvent(new StringBuilder("aaaa"));
+        org.springframework.core.io.Resource resource = applicationContext.getResource(".gitignore");
+        System.out.println(resource.getFilename());
         System.out.println(s);
         return "test" + s;
+    }
+
+    @NumberFormat(style = NumberFormat.Style.CURRENCY)
+    int i = 0;
+    @EventListener
+    public void event(StringBuilder builder) {
+        System.out.println(builder.toString());
     }
     @ConstructorProperties({"a","b"})
     public  Bean2() {
