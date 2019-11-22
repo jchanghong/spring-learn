@@ -1,5 +1,6 @@
 package com.example.springlearn.core.ioc;
 
+import com.example.springlearn.data.JdbcTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.Lifecycle;
@@ -44,6 +45,8 @@ public class Bean2   {
     BeanWeb beanWeb;
 
     @Autowired
+  JdbcTest jdbcTest;
+    @Autowired
     ApplicationContext applicationContext;
     @GetMapping("/test")
     public String web() {
@@ -52,6 +55,7 @@ public class Bean2   {
         org.springframework.core.io.Resource resource = applicationContext.getResource(".gitignore");
         System.out.println(resource.getFilename());
         System.out.println(s);
+        jdbcTest.tx();
         return "test" + s;
     }
 
